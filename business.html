@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Stock Insight — Stock Market Courses</title>
 
-    <!-- ALL STYLES INLINE (so single-file) -->
     <style>
         :root {
             --bg: #071427;
@@ -40,14 +39,12 @@
             text-decoration: none
         }
 
-        /* layout */
         .container {
             max-width: var(--max-width);
             margin: 28px auto;
             padding: 0 var(--container-pad)
         }
-
-        /* NAVBAR */
+        
         .navbar {
             position: fixed;
             top: 0;
@@ -111,7 +108,6 @@
             padding-top: 76px
         }
 
-        /* HERO */
         .hero {
             padding: 36px 0 16px;
             background: linear-gradient(180deg, rgba(6, 12, 20, 0.35), transparent 40%);
@@ -174,7 +170,6 @@
             box-shadow: 0 12px 40px rgba(1, 9, 12, 0.6)
         }
 
-        /* CARD style sections */
         .card {
             background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
             border-radius: var(--radius);
@@ -240,7 +235,6 @@
             font-size: 1.4rem
         }
 
-        /* contact form */
         .contact .contact-form {
             display: grid;
             gap: 12px;
@@ -283,7 +277,6 @@
             color: var(--muted)
         }
 
-        /* FOOTER */
         .site-footer {
             margin-top: 28px;
             padding: 18px 0;
@@ -311,7 +304,6 @@
             text-decoration: none
         }
 
-        /* SUCCESS CARD (initially hidden) */
         .success-wrap {
             display: none;
             min-height: calc(100vh - 120px);
@@ -417,12 +409,10 @@
             font-weight: 700
         }
 
-        /* utility */
         .hidden {
             display: none !important
         }
 
-        /* responsive */
         @media (max-width: 880px) {
             .hero-inner {
                 flex-direction: column;
@@ -462,7 +452,6 @@
 
 <body>
 
-    <!-- NAVBAR -->
     <header class="navbar" id="site-navbar">
         <div class="nav-inner">
             <a class="brand" href="#home">Stock Insight</a>
@@ -478,10 +467,8 @@
         </div>
     </header>
 
-    <!-- MAIN PAGE CONTENT -->
     <main id="page-content">
 
-        <!-- HERO -->
         <section class="hero" id="home">
             <div class="hero-inner">
                 <div class="hero-text">
@@ -494,7 +481,6 @@
                 </div>
 
                 <div class="hero-image">
-                    <!-- Put an image file in same folder and name it hero.jpg, otherwise falls back -->
                     <img src="hero.jpg" alt="Students learning stocks" onerror="this.style.display='none'">
                 </div>
             </div>
@@ -502,7 +488,6 @@
 
         <div class="container">
 
-            <!-- ABOUT -->
             <section id="about" class="card about">
                 <h2>About Stock Insight</h2>
                 <p>
@@ -516,7 +501,6 @@
                 </ul>
             </section>
 
-            <!-- COURSES -->
             <section id="courses" class="card courses">
                 <h2>Courses</h2>
                 <div class="grid">
@@ -564,7 +548,6 @@
                 </div>
             </section>
 
-            <!-- ACHIEVEMENTS -->
             <section id="achievements" class="card achievements">
                 <h2>Achievements</h2>
                 <div class="achieve-grid">
@@ -575,12 +558,10 @@
                 </div>
             </section>
 
-            <!-- CONTACT -->
             <section id="contact" class="card contact">
                 <h2>Contact Us</h2>
                 <p class="muted">Have a question? Want a demo class? Drop your details below.</p>
 
-                <!-- Client-side contact form -->
                 <form id="contact-form" class="contact-form" novalidate>
                     <div class="form-row">
                         <label for="name">Name</label>
@@ -615,7 +596,6 @@
         </div>
     </main>
 
-    <!-- SUCCESS VIEW (client-side, hidden by default) -->
     <main id="success-view" class="success-wrap" aria-hidden="true">
         <div class="success-card" role="status" aria-live="polite">
             <div class="success-visual" aria-hidden="true">
@@ -645,7 +625,6 @@
         </div>
     </main>
 
-    <!-- FOOTER -->
     <footer class="site-footer" id="site-footer">
         <div class="footer-inner container">
             <div class="footer-left">
@@ -664,16 +643,13 @@
         </div>
     </footer>
 
-    <!-- ALL CLIENT-SIDE JS (single-file) -->
     <script>
-        // small helpers
         const qs = s => document.querySelector(s);
         const qsa = s => document.querySelectorAll(s);
         const safe = s => (s || '').toString().replaceAll('<', '&lt;').replaceAll('>', '&gt;');
 
         document.getElementById('cyear').textContent = new Date().getFullYear();
 
-        // Elements
         const pageContent = qs('#page-content');
         const successView = qs('#success-view');
         const submitMeta = qs('#submit-meta');
@@ -682,7 +658,6 @@
         const navEnroll = qs('#nav-enroll');
         const metaHome = qs('#meta-home');
 
-        // Scroll to anchor helpers
         function goToHash(hash) {
             if (!hash) window.scrollTo({ top: 0, behavior: 'smooth' });
             else {
@@ -691,9 +666,7 @@
             }
         }
 
-        // Show success view with provided data
         function showSuccess(data, pushState = true) {
-            // populate tags
             const parts = [];
             if (data.name) parts.push('<div class="tag">Name: ' + safe(data.name) + '</div>');
             if (data.email) parts.push('<div class="tag">Email: ' + safe(data.email) + '</div>');
@@ -703,12 +676,10 @@
             }
             submitMeta.innerHTML = parts.join('') || '<div class="muted">No details provided.</div>';
 
-            // hide main page and show success view
             pageContent.classList.add('hidden');
             successView.style.display = 'flex';
             successView.setAttribute('aria-hidden', 'false');
 
-            // update URL so result is linkable (but don't expose full message if you don't want to)
             if (pushState) {
                 const params = new URLSearchParams({
                     name: data.name || '',
@@ -717,19 +688,15 @@
                 }).toString();
                 history.pushState({ view: 'success', data }, '', window.location.pathname + '?' + params);
             } else {
-                // replace state for initial load
                 history.replaceState({ view: 'success', data }, '', window.location.pathname + window.location.search);
             }
 
-            // Accessibility: focus the success heading
             const heading = successView.querySelector('h1');
             if (heading) heading.focus?.();
 
-            // (Optional) Log to console to simulate server-side logging
             console.info('Contact submission (client):', data);
         }
 
-        // Hide the success view and return to main content
         function hideSuccess(pushState = true) {
             successView.style.display = 'none';
             successView.setAttribute('aria-hidden', 'true');
@@ -742,7 +709,6 @@
             goToHash('#home');
         }
 
-        // Client-side form validation & submission handling
         contactForm.addEventListener('submit', function (e) {
             e.preventDefault();
             submitBtn.disabled = true;
@@ -755,7 +721,6 @@
                 message: formData.get('message')?.trim()
             };
 
-            // basic validation
             if (!data.name || !data.email || !data.message) {
                 alert('Please fill all fields before sending.');
                 submitBtn.disabled = false;
@@ -763,56 +728,45 @@
                 return;
             }
 
-            // simulate async work (e.g., sending to server) — keep very short so it feels real
             setTimeout(() => {
-                // Show success view
                 showSuccess(data, true);
-
-                // reset the form so user doesn't accidentally resubmit
+                
                 contactForm.reset();
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Send Message';
             }, 450);
         });
 
-        // Return Home button on success view
         metaHome.addEventListener('click', () => hideSuccess(true));
 
-        // Navbar Enroll button scrolls to contact
         navEnroll.addEventListener('click', () => {
             goToHash('#contact');
         });
 
-        // Handle browser back/forward
         window.addEventListener('popstate', (ev) => {
             const state = ev.state;
             if (state && state.view === 'success') {
-                // show success (state.data may exist)
                 showSuccess(state.data || {}, false);
             } else {
-                // show home
                 hideSuccess(false);
             }
         });
 
-        // If the page loads with query parameters (?name=...&email=...&message=...), show success view
         (function initFromURL() {
             const params = new URLSearchParams(window.location.search);
             const name = params.get('name') || '';
             const email = params.get('email') || '';
             const message = params.get('message') || '';
             if (name || email || message) {
-                // show success populated from URL params
                 showSuccess({ name, email, message }, false);
             } else {
-                // ensure correct initial history state
                 history.replaceState({ view: 'home' }, '', window.location.pathname);
             }
         })();
 
-        // allow direct links like index.html#contact to scroll to section on load
         if (window.location.hash) setTimeout(() => goToHash(window.location.hash), 120);
     </script>
 </body>
+
 
 </html>
